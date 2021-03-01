@@ -10,6 +10,10 @@ class TodoItem extends React.Component {
     alert(`Anda memencet button ${type}`)
   }
 
+  // componentWillUnmount() {
+  //   alert("Component UNMOUNT")
+  // }
+
   render () {
     return (
       <div className="my-1 d-flex flex-row justify-content-between todo-item-container align-items-center">
@@ -17,13 +21,13 @@ class TodoItem extends React.Component {
         <div>
           <button 
           onClick={() => this.props.deleteTodoHandler(this.props.todoData.id)} 
-          className="btn btn-danger">
+          className="btn btn-danger mx-1">
             Delete
           </button>
           <button 
           disabled={this.props.todoData.isFinished} 
           onClick={() => this.props.completeTodoHandler(this.props.todoData.id)} 
-          className="btn btn-success">
+          className="btn btn-success mx-1">
             {
               // if ternary
               // this.props.todoData.isFinished ? <strong>Finished</strong> : <em>Complete</em>

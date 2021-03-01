@@ -14,16 +14,6 @@
       "isFinished": true,
       "activity": "Rebahan",
       "id": 5
-    },
-    {
-      "isFinished": true,
-      "activity": "Design",
-      "id": 6
-    },
-    {
-      "isFinished": false,
-      "activity": "Programming",
-      "id": 7
     }
   ],
   "users": []

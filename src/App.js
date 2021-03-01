@@ -1,10 +1,8 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import "./styles.css";
 import "bootstrap/dist/css/bootstrap.css";
 import TodoItem from "./components/TodoItem";
-import TodoItemF from "./components/TodoItemF";
 import Axios from "axios";
 
 class App extends React.Component {
@@ -79,15 +77,24 @@ class App extends React.Component {
     this.setState({ inputTodo: event.target.value });
   };
 
+  componentDidMount() {
+    this.fetchTodo();
+  }
+
+  // componentDidUpdate() {
+  //   alert("Component UPDATE")
+  // }
+
   render() {
+    // alert("Component RENDER")
     return (
-      <div>
+      <div className="container">
         <h1>Todo List</h1>
         <button className="btn btn-info" onClick={this.fetchTodo}>
           Get my Todo List
         </button>
         {this.renderTodoList()}
-        <div>
+        <div className="mt-3">
           <input onChange={this.inputHandler} type="text" className="mx-3" />
           <button onClick={this.addTodo} className="btn btn-primary">
             Add Todo
