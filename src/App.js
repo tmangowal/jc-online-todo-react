@@ -1,65 +1,97 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
 import "./styles.css";
-import "bootstrap/dist/css/bootstrap.css"
-import TodoItem from './components/TodoItem';
-import TodoItemF from './components/TodoItemF';
-// Props
-// - Data dari parent ke child
+import "bootstrap/dist/css/bootstrap.css";
+import TodoItem from "./components/TodoItem";
+import TodoItemF from "./components/TodoItemF";
+import Axios from "axios";
+
 class App extends React.Component {
   state = {
-    todoList: [
-      { activity: "Makan", id: 1},
-      { activity: "Mandi", id: 2},
-      { activity: "Coding", id: 3},
-      { activity: "Tidur", id: 4},
-    ],
+    todoList: [],
     inputTodo: "",
-  }
+  };
 
-  deleteTodo = (id) => { // id = 3
-    this.setState(
-      {
-        todoList: this.state.todoList.filter((val) => {
-          return val.id !== id
-        })
-      }
-    )
-  }
+  fetchTodo = () => {
+    Axios.get("http://localhost:2000/todo") // Start execute
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ todoList: response.data });
+      })
+      .catch((err) => {
+        alert("Terjadi kesalahan di server!!");
+      });
+  };
+
+  deleteTodo = (id) => {
+    Axios.delete(`http://localhost:2000/todo/${id}`)
+      .then(() => {
+        alert("Berhasil delete todo");
+        this.fetchTodo();
+      })
+      .catch((err) => {
+        alert("Terjadi kesalahan di server!!");
+      });
+  };
+
+  completeTodo = (id) => {
+    Axios.patch(`http://localhost:2000/todo/${id}`, {
+      isFinished: true,
+    })
+      .then(() => {
+        alert("Berhasil complete todo!");
+        this.fetchTodo();
+      })
+      .catch((err) => {
+        alert("Terjadi kesalahan di server!!");
+      });
+  };
 
   renderTodoList = () => {
     return this.state.todoList.map((val) => {
       return (
-        <TodoItem deleteTodoHandler={this.deleteTodo} todoData={val} />
-      )
-    })
-  }
+        <TodoItem
+          completeTodoHandler={this.completeTodo}
+          deleteTodoHandler={this.deleteTodo}
+          todoData={val}
+        />
+      );
+    });
+  };
 
   addTodo = () => {
-    this.setState(
-      {
-        todoList: [
-          ...this.state.todoList,
-          { activity: this.state.inputTodo, id: this.state.todoList.length + 1 },
-        ]
-      }
-    )
-  }
+    Axios.post("http://localhost:2000/todo", {
+      activity: this.state.inputTodo,
+      isFinished: false,
+    })
+      .then(() => {
+        alert("Berhasil menambahkan todo!");
+        this.fetchTodo();
+      })
+      .catch((err) => {
+        alert("Terjadi kesalahan di server!!");
+      });
+  };
 
   inputHandler = (event) => {
     // event.target.value menyimpan value dari input text saat ini
     this.setState({ inputTodo: event.target.value });
-  }
+  };
 
-  render () {
+  render() {
     return (
       <div>
         <h1>Todo List</h1>
-        { this.renderTodoList() }
+        <button className="btn btn-info" onClick={this.fetchTodo}>
+          Get my Todo List
+        </button>
+        {this.renderTodoList()}
         <div>
-          <input onChange={this.inputHandler} type="text" className="mx-3"/>
-          <button onClick={this.addTodo} className="btn btn-primary">Add Todo</button>
+          <input onChange={this.inputHandler} type="text" className="mx-3" />
+          <button onClick={this.addTodo} className="btn btn-primary">
+            Add Todo
+          </button>
         </div>
       </div>
     );
