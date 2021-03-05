@@ -14,6 +14,26 @@
       "isFinished": true,
       "activity": "Rebahan",
       "id": 5
+    },
+    {
+      "activity": "Design",
+      "isFinished": false,
+      "id": 6
+    },
+    {
+      "activity": "Istirahat",
+      "isFinished": false,
+      "id": 7
+    },
+    {
+      "activity": "Design",
+      "isFinished": false,
+      "id": 8
+    },
+    {
+      "activity": "Testing",
+      "isFinished": false,
+      "id": 9
     }
   ],
   "users": []
