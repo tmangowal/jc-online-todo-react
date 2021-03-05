@@ -12,6 +12,8 @@ export default (state = init_state, action) => {
       return { ...state, todoCount: state.todoCount - 1};
     case "CHANGE_TODO_COUNT":
       return { ...state, todoCount: action.payload };
+    case "GET_TODO":
+      return { ...state, todoList: action.payload };
     default:
       return state;
   }
