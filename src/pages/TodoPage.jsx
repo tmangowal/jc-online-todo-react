@@ -114,6 +114,25 @@ class TodoPage extends React.Component {
   }
 }
 
+const incrementTodoCount = () => {
+  return {
+    type: "INCREMENT_TODO_COUNT"
+  }
+}
+
+const decrementTodoCount = () => {
+  return {
+    type: "DECREMENT_TODO_COUNT"
+  }
+}
+
+const changeTodoCount = newCount => {
+  return {
+    type: "CHANGE_TODO_COUNT",
+    payload: newCount
+  }
+}
+
 const mapStateToProps = (state) => {
   // state = {
   //  todo: todo
